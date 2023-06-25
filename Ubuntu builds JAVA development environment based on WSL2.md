@@ -4,33 +4,33 @@
 
 ## Install the WSL environment
 
-```shell
-// Enable the Windows subsystem for Linux: Open powershell and type the follow command
+> Enable the Windows subsystem for Linux: Open powershell and type the follow command
 
+```shell
 dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
 ```
 
-```shell
-// Enable virtualization: open powershell as an administrator and type the follow command
+> Enable virtualization: open powershell as an administrator and type the follow command
 
+```shell
 dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
 ```
 
-```shell
-// Set WSL default version
+> Set WSL default version
 
+```shell
 wsl --set-default-version 2
 ```
 
-```shell
-// Enable Hyper-v 
+> Enable Hyper-v 
 
+```shell
 bcdedit /set hypervisorlaunchtype auto
 ```
 
-```shell
-// Install the linux distribution
+> Install the linux distribution
 
+```shell
 wsl --install -d Ubuntu
 ```
 
@@ -38,31 +38,29 @@ wsl --install -d Ubuntu
 
 ## Configure the WSL2
 
-```shell
-// Create default account and password
-```
+> Create default account and password
+
+> Upgrade the WSL kernel
 
 ```shell
-// Upgrade the WSL kernel
-
 wsl --update
 ```
 
-```shell
-// Restart and take effect
+> Restart and take effect
 
+```shell
 wsl -l -shutdown
 ```
 
-```shell
-// There are three records
+> There are three records
 
+```shell
 wsl -l -v
 ```
 
-```bash
-// Update package manager if you are Debian (Of course, we used Ubuntu a few steps ahead )
+> Update package manager if you are Debian (Of course, we used Ubuntu a few steps ahead )
 
+```bash
 sudo apt update && sudo apt upgrade
 ```
 
@@ -124,12 +122,22 @@ docker pull mysql:5.7-debian
 ```
 
 ```bash
-mkdir /mydata/mysql/conf.d
+mkdir /mydata/mysql/
+```
 
-cd /mydata/mysql/conf.d
+```bash
+cd /mydata/mysql/
+```
 
+```bash
+mkdir conf.d
+```
+
+```bash
 touch my.cnf
+```
 
+```bash
 vim my.cnf
 ```
 
@@ -160,11 +168,11 @@ sudo docker run -p 3306:3306 --name mysql \
 
 ```bash
 docker update mysql --restart=always
-
-docker restart mysql
 ```
 
-
+```bash
+docker restart mysql
+```
 
 ## Build a Redis container
 
@@ -174,11 +182,17 @@ docker pull redis:7.0.11-bullseye
 
 ```bash
 mkdir -p /mydata/redis/conf
+```
 
+```bash
 touch /mydata/redis/conf/redis.conf
+```
 
+```bash
 vim /mydata/redis/conf/redis.conf
+```
 
+```bash
 appendonly yes
 ```
 
@@ -193,20 +207,33 @@ docker run -p 6379:6379 --name redis \
 docker update redis --restart=always
 ```
 
-
-
 ## Build a Nginx container
 
 ```bash
-docker pull nginx:1.18.0
+docker pull nginx:1.10
+```
 
+```bash
 docker run -p 80:80 --name nginx -d nginx:1.10
+```
 
+```bash
 cd /mydata/nginx
-docker container cp nginx:/etc/nginx .
-mv /mydata/nginx/nginx /mydata/nginx/conf
+```
 
+```bash
+docker container cp nginx:/etc/nginx .
+```
+
+```bash
+mv /mydata/nginx/nginx /mydata/nginx/conf
+```
+
+```bash
 docker stop nginx
+```
+
+```bash
 docker rm nginx
 ```
 
@@ -216,12 +243,17 @@ docker run -p 80:80 --name nginx \
 -v /mydata/nginx/logs:/var/log/nginx \
 -v /mydata/nginx/conf:/etc/nginx \
 -d nginx:1.10
+```
 
+```bash
 docker update nginx --restart=always
 ```
 
 ```bash
 cd /mydata/nginx/html/
+```
+
+```bash
 vim index.html
 ```
 
